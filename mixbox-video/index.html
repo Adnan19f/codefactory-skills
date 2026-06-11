@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--
+  MixBox — HyperFrames Composition v2
+  Preview:  npm run dev
+  Check:    npm run check
+  Render:   npm run render
+-->
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1080px;overflow:hidden;background:#000;font-family:'Barlow Condensed',sans-serif;color:#fff}
+
+#root{
+  position:relative;width:1080px;height:1080px;
+  overflow:hidden;
+  background:linear-gradient(160deg,#1a1a1a 0%,#0d0d0d 100%);
+}
+
+.hdr{
+  position:absolute;top:0;left:0;right:0;height:148px;
+  background:rgba(0,0,0,0.65);
+  display:flex;align-items:center;padding:0 52px;gap:18px;
+  border-bottom:3px solid #E8272A;z-index:100;
+  transform:translateY(-148px);opacity:0;
+}
+.logo-box{width:56px;height:56px;background:#E8272A;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-txt{font-size:46px;font-weight:900;letter-spacing:-1px;line-height:1}
+.logo-txt em{color:#E8272A;font-style:normal}
+.cpill{margin-left:auto;background:#E8272A;color:#fff;font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:10px 32px;border-radius:100px}
+
+.content{position:absolute;top:148px;left:0;right:0;bottom:100px;overflow:hidden}
+
+.card{position:absolute;inset:0;display:flex;align-items:center;padding:56px 64px;gap:64px;opacity:0;visibility:hidden}
+.cimg{width:440px;height:600px;flex-shrink:0;border-radius:18px;overflow:hidden;border:3px solid rgba(232,39,42,0.35);background:#1c1c1c;display:flex;align-items:center;justify-content:center}
+.cimg img{width:100%;height:100%;object-fit:cover}
+.ph{display:flex;flex-direction:column;align-items:center;gap:16px}
+.ph svg{width:80px;height:80px}
+.ph span{font-size:24px;font-weight:700;color:#2a2a2a}
+.cinfo{flex:1;display:flex;flex-direction:column}
+.ctag{display:inline-flex;background:rgba(232,39,42,0.12);border:1.5px solid rgba(232,39,42,0.5);color:#E8272A;font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:8px 20px;border-radius:6px;width:fit-content;margin-bottom:24px;opacity:0;transform:translateY(20px)}
+.ctitle{font-size:82px;font-weight:900;line-height:0.95;text-transform:uppercase;margin-bottom:14px;color:#fff;opacity:0;transform:translateY(28px)}
+.csub{font-size:28px;font-weight:600;color:#888;margin-bottom:30px;font-family:'Inter',sans-serif;opacity:0;transform:translateY(18px)}
+.csizes{font-size:24px;font-weight:500;color:#666;font-family:'Inter',sans-serif;margin-bottom:36px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(14px)}
+.sdot{width:8px;height:8px;border-radius:50%;background:#E8272A;flex-shrink:0}
+.cprice{font-size:60px;font-weight:900;color:#E8272A;margin-bottom:40px;letter-spacing:-1px;opacity:0;transform:scale(0.7)}
+.ccta{display:inline-flex;background:#E8272A;color:#fff;font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:18px 48px;border-radius:10px;width:fit-content;opacity:0;transform:translateY(18px)}
+
+.outro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;opacity:0;visibility:hidden;background:#0d0d0d}
+.ologo{display:flex;align-items:center;gap:20px;opacity:0;transform:scale(0.7)}
+.obox{width:80px;height:80px;background:#E8272A;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.otxt{font-size:72px;font-weight:900;letter-spacing:-2px;line-height:1}
+.otxt em{color:#E8272A;font-style:normal}
+.odiv{width:120px;height:3px;background:#E8272A;border-radius:2px;opacity:0;transform:scaleX(0)}
+.otagline{font-size:28px;font-weight:400;color:#888;text-align:center;font-family:'Inter',sans-serif;opacity:0;transform:translateY(20px)}
+.ourl{font-size:36px;font-weight:700;color:#ccc;letter-spacing:1px;opacity:0;transform:translateY(16px)}
+
+.ov{position:absolute;inset:0;background:#E8272A;transform:scaleX(0);transform-origin:left center;z-index:150}
+
+.ftr{position:absolute;bottom:0;left:0;right:0;height:100px;background:rgba(0,0,0,0.8);border-top:1.5px solid #2a2a2a;display:flex;align-items:center;justify-content:center;gap:56px;z-index:100;transform:translateY(100px);opacity:0}
+.fi{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:23px;color:#aaa}
+.fdot{width:6px;height:6px;border-radius:50%;background:#E8272A}
+
+.pgbar{position:absolute;bottom:100px;left:0;height:3px;background:#E8272A;transform-origin:left center;transform:scaleX(0);z-index:200;width:100%}
+</style>
+</head>
+<body>
+
+<div data-hf-id="hf-iprf" id="root" data-composition-id="mixbox-promo" data-start="0" data-width="1080" data-height="1080">
+
+  <div data-hf-id="hf-atzm" class="hdr" id="hdr">
+    <div data-hf-id="hf-1bwh" class="logo-box">
+      <svg data-hf-id="hf-ppqy" width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <polyline data-hf-id="hf-5ca1" points="7,10 18,21 29,10" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+        <line data-hf-id="hf-opn5" x1="18" y1="21" x2="18" y2="32" stroke="white" stroke-width="4.5" stroke-linecap="round" />
+      </svg>
+    </div>
+    <div data-hf-id="hf-8e48" class="logo-txt">Mix<em data-hf-id="hf-9cw8">Box</em></div>
+    <div data-hf-id="hf-4709" class="cpill">XXL Moda</div>
+  </div>
+
+  <div data-hf-id="hf-mcm7" class="content">
+
+    <div data-hf-id="hf-jus0" class="card" id="c1">
+      <div data-hf-id="hf-um7k" class="cimg">
+        <!-- Zamijeni sa: <img src="./trenerka.jpg"> -->
+        <div data-hf-id="hf-i8mw" class="ph">
+          <svg data-hf-id="hf-wf7p" viewBox="0 0 80 80" fill="none"><rect data-hf-id="hf-qugd" x="10" y="15" width="60" height="50" rx="6" stroke="#2a2a2a" stroke-width="3" /><circle data-hf-id="hf-73hf" cx="40" cy="40" r="14" stroke="#2a2a2a" stroke-width="3" /></svg>
+          <span data-hf-id="hf-b447">Trenerka</span>
+        </div>
+      </div>
+      <div data-hf-id="hf-cq83" class="cinfo">
+        <div data-hf-id="hf-67ix" class="ctag" id="c1tag">Novo u ponudi</div>
+        <div data-hf-id="hf-ezlk" class="ctitle" id="c1title">Trenerka<br data-hf-id="hf-x5px">Premium</div>
+        <div data-hf-id="hf-e0j4" class="csub" id="c1sub">Kamoa Fashion</div>
+        <div data-hf-id="hf-gn4b" class="csizes" id="c1sizes"><span data-hf-id="hf-9461" class="sdot"></span>Veličine: 3XL – 10XL</div>
+        <div data-hf-id="hf-ldfr" class="cprice" id="c1price">KM 80,00</div>
+        <div data-hf-id="hf-w8kc" class="ccta" id="c1cta">Naruči online →</div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-uq9n" class="card" id="c2">
+      <div data-hf-id="hf-yy14" class="cimg">
+        <!-- Zamijeni sa: <img src="./majica.jpg"> -->
+        <div data-hf-id="hf-3axc" class="ph">
+          <svg data-hf-id="hf-4ok9" viewBox="0 0 80 80" fill="none"><rect data-hf-id="hf-ldgh" x="10" y="15" width="60" height="50" rx="6" stroke="#2a2a2a" stroke-width="3" /><circle data-hf-id="hf-ph0j" cx="40" cy="40" r="14" stroke="#2a2a2a" stroke-width="3" /></svg>
+          <span data-hf-id="hf-okva">Majica</span>
+        </div>
+      </div>
+      <div data-hf-id="hf-bzur" class="cinfo">
+        <div data-hf-id="hf-lx7v" class="ctag" id="c2tag">Rasprodaja</div>
+        <div data-hf-id="hf-b45w" class="ctitle" id="c2title">Majica<br data-hf-id="hf-rsrt">Premium</div>
+        <div data-hf-id="hf-ky1n" class="csub" id="c2sub">Kamoa Fashion</div>
+        <div data-hf-id="hf-jvlq" class="csizes" id="c2sizes"><span data-hf-id="hf-v48d" class="sdot"></span>Veličine: 3XL – 10XL</div>
+        <div data-hf-id="hf-sdyv" class="cprice" id="c2price">KM 45,00</div>
+        <div data-hf-id="hf-cbmp" class="ccta" id="c2cta">Pogledaj kolekciju →</div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-okju" class="card" id="c3">
+      <div data-hf-id="hf-xr41" class="cimg">
+        <!-- Zamijeni sa: <img src="./bermude.jpg"> -->
+        <div data-hf-id="hf-2409" class="ph">
+          <svg data-hf-id="hf-5vhc" viewBox="0 0 80 80" fill="none"><rect data-hf-id="hf-mkdk" x="10" y="15" width="60" height="50" rx="6" stroke="#2a2a2a" stroke-width="3" /><circle data-hf-id="hf-p2pi" cx="40" cy="40" r="14" stroke="#2a2a2a" stroke-width="3" /></svg>
+          <span data-hf-id="hf-bnwz">Bermude</span>
+        </div>
+      </div>
+      <div data-hf-id="hf-bljq" class="cinfo">
+        <div data-hf-id="hf-2k3r" class="ctag" id="c3tag">Popularno</div>
+        <div data-hf-id="hf-axye" class="ctitle" id="c3title">Bermude<br data-hf-id="hf-szow">Premium</div>
+        <div data-hf-id="hf-opco" class="csub" id="c3sub">XXL Moda</div>
+        <div data-hf-id="hf-tlht" class="csizes" id="c3sizes"><span data-hf-id="hf-wb5g" class="sdot"></span>Veličine: 3XL – 10XL</div>
+        <div data-hf-id="hf-n544" class="cprice" id="c3price">KM 70,00</div>
+        <div data-hf-id="hf-6ypo" class="ccta" id="c3cta">Dostupno na mixbox.ba →</div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-x35k" class="outro" id="outro">
+      <div data-hf-id="hf-myoi" class="ologo" id="ologo">
+        <div data-hf-id="hf-y3cu" class="obox">
+          <svg data-hf-id="hf-uhpa" width="52" height="52" viewBox="0 0 52 52" fill="none">
+            <polyline data-hf-id="hf-djac" points="10,14 26,30 42,14" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <line data-hf-id="hf-r03d" x1="26" y1="30" x2="26" y2="44" stroke="white" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div data-hf-id="hf-y3qp" class="otxt">Mix<em data-hf-id="hf-phj4">Box</em></div>
+      </div>
+      <div data-hf-id="hf-1veu" class="odiv" id="odiv"></div>
+      <div data-hf-id="hf-tu7f" class="otagline" id="otagline">Sve što trebaš, na jednom mjestu.</div>
+      <div data-hf-id="hf-r2s8" class="ourl" id="ourl">mixbox.ba</div>
+    </div>
+
+    <div data-hf-id="hf-httf" class="ov" id="ov1"></div>
+    <div data-hf-id="hf-6ybs" class="ov" id="ov2"></div>
+
+  </div>
+
+  <div data-hf-id="hf-xtrm" class="ftr" id="ftr">
+    <div data-hf-id="hf-k99s" class="fi">📞 +387 62 631 517</div>
+    <div data-hf-id="hf-lkjf" class="fdot"></div>
+    <div data-hf-id="hf-xwhp" class="fi">🌐 mixbox.ba</div>
+    <div data-hf-id="hf-vw8r" class="fdot"></div>
+    <div data-hf-id="hf-hda6" class="fi">mixbox.olx.ba</div>
+  </div>
+
+  <div data-hf-id="hf-d8ea" class="pgbar" id="pgbar"></div>
+
+</div>
+
+<script>
+window.__timelines = window.__timelines || {};
+
+const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
+
+// HEADER + FOOTER
+tl.fromTo('#hdr', { y:-148, opacity:0 }, { y:0, opacity:1, duration:0.5 }, 0)
+  .fromTo('#ftr', { y:100,  opacity:0 }, { y:0, opacity:1, duration:0.5 }, 0.2)
+  .to('#pgbar', { scaleX:1, duration:20, ease:'none' }, 0);
+
+// CARD 1
+tl.set('#c1', { visibility:'visible' })
+  .fromTo('#c1',          { opacity:0 }, { opacity:1, duration:0.01 }, 0.3)
+  .fromTo('#c1 .cimg',   { x:-100, opacity:0 }, { x:0, opacity:1, duration:0.55 }, 0.35)
+  .fromTo('#c1tag',      { y:20, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 0.7)
+  .fromTo('#c1title',    { y:28, opacity:0 }, { y:0, opacity:1, duration:0.35 }, 0.9)
+  .fromTo('#c1sub',      { y:18, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 1.1)
+  .fromTo('#c1sizes',    { y:14, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 1.25)
+  .fromTo('#c1price',    { scale:0.7, opacity:0 }, { scale:1, opacity:1, duration:0.4, ease:'back.out(1.5)' }, 1.4)
+  .fromTo('#c1cta',      { y:18, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 1.65)
+  // exit
+  .to('#ov1', { scaleX:1, duration:0.2, ease:'power3.in'  }, 5.5)
+  .to('#ov1', { scaleX:0, transformOrigin:'right center', duration:0.2, ease:'power3.out' }, 5.72)
+  .to('#c1',  { opacity:0, duration:0.01 }, 5.61);
+
+// CARD 2
+tl.set('#c2', { visibility:'visible' })
+  .fromTo('#c2',          { opacity:0 }, { opacity:1, duration:0.01 }, 5.73)
+  .fromTo('#c2 .cimg',   { x:-100, opacity:0 }, { x:0, opacity:1, duration:0.55 }, 5.85)
+  .fromTo('#c2tag',      { y:20, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 6.15)
+  .fromTo('#c2title',    { y:28, opacity:0 }, { y:0, opacity:1, duration:0.35 }, 6.35)
+  .fromTo('#c2sub',      { y:18, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 6.55)
+  .fromTo('#c2sizes',    { y:14, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 6.7)
+  .fromTo('#c2price',    { scale:0.7, opacity:0 }, { scale:1, opacity:1, duration:0.4, ease:'back.out(1.5)' }, 6.85)
+  .fromTo('#c2cta',      { y:18, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 7.1)
+  // exit
+  .to('#ov2', { scaleX:1, duration:0.2, ease:'power3.in'  }, 11.5)
+  .to('#ov2', { scaleX:0, transformOrigin:'right center', duration:0.2, ease:'power3.out' }, 11.72)
+  .to('#c2',  { opacity:0, duration:0.01 }, 11.61);
+
+// CARD 3
+tl.set('#c3', { visibility:'visible' })
+  .fromTo('#c3',          { opacity:0 }, { opacity:1, duration:0.01 }, 11.73)
+  .fromTo('#c3 .cimg',   { x:-100, opacity:0 }, { x:0, opacity:1, duration:0.55 }, 11.9)
+  .fromTo('#c3tag',      { y:20, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 12.2)
+  .fromTo('#c3title',    { y:28, opacity:0 }, { y:0, opacity:1, duration:0.35 }, 12.4)
+  .fromTo('#c3sub',      { y:18, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 12.6)
+  .fromTo('#c3sizes',    { y:14, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 12.75)
+  .fromTo('#c3price',    { scale:0.7, opacity:0 }, { scale:1, opacity:1, duration:0.4, ease:'back.out(1.5)' }, 12.9)
+  .fromTo('#c3cta',      { y:18, opacity:0 }, { y:0, opacity:1, duration:0.3 }, 13.15)
+  // exit
+  .to('#c3', { opacity:0, x:-60, duration:0.4, ease:'power2.in' }, 16.2);
+
+// OUTRO
+tl.set('#outro', { visibility:'visible' })
+  .fromTo('#outro',    { opacity:0 }, { opacity:1, duration:0.5 }, 16.8)
+  .fromTo('#ologo',    { scale:0.7, opacity:0 }, { scale:1, opacity:1, duration:0.6, ease:'back.out(1.5)' }, 16.9)
+  .fromTo('#odiv',     { scaleX:0, opacity:0 }, { scaleX:1, opacity:1, duration:0.4 }, 17.5)
+  .fromTo('#otagline', { y:20, opacity:0 }, { y:0, opacity:1, duration:0.4 }, 17.7)
+  .fromTo('#ourl',     { y:16, opacity:0 }, { y:0, opacity:1, duration:0.35 }, 17.9);
+
+// OBAVEZNO: registracija (key = data-composition-id)
+window.__timelines["mixbox-promo"] = tl;
+</script>
+
+</body>
+</html>
